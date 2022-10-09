@@ -1,4 +1,4 @@
-import IProduct from '../interfaces';
+import { IProduct } from '../interfaces';
 import connection from '../models/connection';
 import ProductModel from '../models/product.model';
 

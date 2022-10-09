@@ -5,4 +5,15 @@ interface IProduct {
   orderId?: number | null
 }
 
-export default IProduct;
+interface IUser {
+  id?: number,
+  username: string,
+  classe?: string,
+  level?: number,
+  password?: string 
+}
+
+export {
+  IProduct,
+  IUser,
+};
