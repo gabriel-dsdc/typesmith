@@ -14,6 +14,15 @@ class UserController {
 
     res.status(201).json({ token });
   }
+
+  async login(req: Request, res: Response) {
+    const { username, password } = req.body;
+    const token = await this.service.login({ username, password });
+    if ((token as { message: string }).message) {
+      return res.status(401).json({ message: (token as { message: string }).message });
+    }
+    res.status(200).json({ token });
+  }
 }
 
 export default UserController;
