@@ -13,6 +13,11 @@ class ProductService {
     const newProduct = await this.model.createProduct({ name, amount });
     return newProduct;
   }
+
+  async listProducts() {
+    const productsList = await this.model.listProducts();
+    return productsList;
+  }
 }
 
 export default ProductService;
