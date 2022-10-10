@@ -1,4 +1,4 @@
-import { Pool, RowDataPacket } from 'mysql2/promise';
+import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 import { IOrder } from '../interfaces';
 
 class OrderModel {
@@ -15,6 +15,23 @@ class OrderModel {
       GROUP BY o.id`,
     );
     return ordersList;
+  }
+
+  async createOrder({ userId, productsIds }: IOrder): Promise<IOrder> {
+    const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
+      'INSERT INTO Trybesmith.Orders (userId) VALUES (?)',
+      [userId],
+    );
+
+    await Promise.all(productsIds.map((productId: number) => (
+      this.connection.execute<ResultSetHeader>(
+        'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?',
+        [insertId, productId],
+      ))));
+    return {
+      userId,
+      productsIds,
+    };
   }
 }
 

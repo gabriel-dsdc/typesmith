@@ -13,6 +13,14 @@ class OrderController {
     const ordersList: IOrder[] = await this.service.listOrders();
     res.status(200).json(ordersList);
   }
+
+  async createOrder(req: Request, res: Response) {
+    const { id: userId }: IOrder = res.locals.payload;
+    const { productsIds }: IOrder = req.body;
+
+    const newOrder: IOrder = await this.service.createOrder({ userId, productsIds });
+    res.status(201).json(newOrder);
+  }
 }
 
 export default OrderController;

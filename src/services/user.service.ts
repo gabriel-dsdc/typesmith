@@ -18,6 +18,11 @@ class UserService {
     return token;
   }
 
+  verifyToken(token: string) {
+    const payload = jwt.verify(token, this.JWT_SECRET || 'secret') as IUser;
+    return payload;
+  }
+
   async createUser({ username, classe, level, password }: IUser): Promise<string> {
     const newUser = await this.model.createUser({ username, classe, level, password });
     const token = this.generateToken(newUser);
